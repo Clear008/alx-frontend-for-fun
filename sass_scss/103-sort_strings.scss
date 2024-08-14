@@ -1,3 +1,21 @@
-/* Sass file */
-@import '103-sort_list.scss';
-@debug
+// Function to sort the list
+@function sort-list($list) {
+  $sorted-list: ();
+  
+  @each $item in $list {
+    $min: $item;
+    $index: index($list, $min);
+    
+    @for $i from 1 through length($list) {
+      @if str-compare(nth($list, $i), $min) < 0 {
+        $min: nth($list, $i);
+        $index: $i;
+      }
+    }
+    
+    $sorted-list: append($sorted-list, $min);
+    $list: remove-nth($list, $index);
+  }
+  
+  @return $sorted-list;
+}
